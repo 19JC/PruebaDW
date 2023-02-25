@@ -1,0 +1,32 @@
+Create database PruebaDW
+
+CREATE TABLE dbo.Clientes
+    (Cliente int PRIMARY KEY NOT NULL,
+    Nombre_Cliente varchar(25) NOT NULL,
+    Direccion Varchar(30) NOT NULL)
+
+CREATE TABLE dbo.Cabeza_Factura
+    (Numero int PRIMARY KEY NOT NULL,
+    Fecha varchar(25) NOT NULL,
+    Cliente INT NOT NULL,
+	Total int NOT NULL)
+
+alter table dbo.Cabeza_Factura add constraint FK_Cliente
+FOREIGN KEY (Cliente) references dbo.Clientes (Cliente)
+
+CREATE TABLE dbo.Detalle_Factura
+    (Numero int NOT NULL,
+    Producto varchar(25) Primary Key NOT NULL,
+    Cantidad INT NOT NULL,
+	Valor int NOT NULL)
+
+alter table dbo.Detalle_Factura add constraint FK_Numero
+FOREIGN KEY (Numero) references dbo.Cabeza_Factura (Numero)
+
+CREATE TABLE dbo.Productos
+    (Producto varchar(25) NOT NULL,
+    Nombre_Producto varchar(25) Primary Key NOT NULL,
+	Valor int NOT NULL)
+
+alter table dbo.Productos add constraint FK_Producto
+FOREIGN KEY (Producto) references dbo.Detalle_Factura (Producto)
